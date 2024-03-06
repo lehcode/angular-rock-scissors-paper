@@ -1,0 +1,41 @@
+version: '3.8'
+services:
+  # application service
+  game-app:
+    # image name and version based on environment variables
+    image: game-app_node-v${CONTAINER_NODE_VERSION:?}
+    # container name
+    container_name: demo-game
+    # command to run on container startup
+    command: /bin/bash /init.sh
+    # build settings
+    build:
+      context: ./
+      dockerfile: docker/Dockerfile
+      # build arguments based on environment variables
+      args:
+        NODE_VERSION: ${CONTAINER_NODE_VERSION:?}
+        USER: ${HOST_USER:?}
+        UID: ${HOST_UID:?}
+        GROUP: ${HOST_GROUP:?}
+        GID: ${HOST_GID:?}
+        DEBUG: ${DEBUG:-no}
+    # environment variables for the container
+    environment:
+      APP_ROOT: ${APP_ROOT:?}
+      NODE_ENV: ${NODE_ENV:-development}
+      NX_ADD_PLUGINS: false
+    # working directory inside the container
+    working_dir: ${APP_ROOT:?}/
+    # volumes to mount
+    volumes:
+      - ./game:${APP_ROOT:?}/
+      - build_logs:/var/log/app/
+      - npm_logs:/home/${HOST_USER}/.npm/_logs/
+    ports:
+      - "4200:4200"
+
+# Specify volumes
+volumes:
+  build_logs:
+  npm_logs:
