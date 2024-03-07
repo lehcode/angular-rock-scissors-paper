@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-  selector: 'game-game-stats',
+  selector: 'game-stats',
   standalone: true,
   imports: [],
   templateUrl: './game-stats.component.html',

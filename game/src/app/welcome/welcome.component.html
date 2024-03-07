@@ -1,0 +1,15 @@
+<h1>Welcome, {{ player?.name }}!</h1>
+<h2>Please tell me your name</h2>
+
+<div class="container-fluid">
+  <div class="row">
+    <form [formGroup]="form" class="login-form">
+      <div class="col-sm-2">
+        <input type="text" placeholder="Player name" formControlName="name" />
+      </div>
+      <div class="col-sm-10">
+        <button type="button" class="btn btn-primary" (click)="setName()" [disabled]="!form.valid">Play!</button>
+      </div>
+    </form>
+  </div>
+</div>
