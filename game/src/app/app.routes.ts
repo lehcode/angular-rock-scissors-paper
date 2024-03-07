@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
-import { GameComponent } from '~/app/game/game.component';
-import { NotFoundComponent } from '~/app/not-found/not-found.component';
-import { WelcomeComponent } from '~/app/welcome/welcome.component';
+import { NotFoundComponent } from '~/app/hoc/not-found/not-found.component';
+import { WelcomeComponent } from '~/app/hoc/welcome/welcome.component';
 
 export const routes: Routes = [
   { path: "welcome", component: WelcomeComponent, title: 'Game'  },

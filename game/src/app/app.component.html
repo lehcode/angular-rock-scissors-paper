@@ -1,16 +1,21 @@
-<game-sidebar></game-sidebar>
+<div class="container-fluid d-flex flex-row pt-4">
 
-@if(title) {
-  <main class="container-fluid">
-    <div class="container">
-      <div class="left-side">
-        <h1>Hello, {{ title }}</h1>
-        <p>Congratulations! App is running. 🎉</p>
-      </div>
+  <game-sidebar></game-sidebar>
+
+  <div class="d-flex w-100 flex-column justify-content-top align-items-stretch">
+    <div class="container-fluid">
+
+      @if (player) {
+        <div class="row">
+          <main class="justify-content-center">
+            <p>Congratulations! App is running. 🎉</p>
+          </main>
+
+          <router-outlet />
+
+        </div>
+      }
+
     </div>
-  </main>
-}
-
-
-<router-outlet />
-
+  </div>
+</div>

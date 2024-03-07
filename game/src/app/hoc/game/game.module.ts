@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { GameComponent } from '~/app/game/game.component';
-import { WelcomeComponent } from '~/app/welcome/welcome.component';
+import { GameComponent } from '~/app/hoc/game/game.component';
+import { WelcomeComponent } from '~/app/hoc/welcome/welcome.component';
 
 export const gameRoutes: Routes = [
   {
     path: 'game',
     component: GameComponent,
     children: [
-      { path: 'stats', loadChildren: () => import('~/app/game-stats/game-stats.routes'), title: 'Game Stats'},
+      { path: 'stats', loadChildren: () => import('~/app/hoc/game-stats/game-stats.routes'), title: 'Game Stats'},
     ]
   },
   {

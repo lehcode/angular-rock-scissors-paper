@@ -1,4 +1,4 @@
-export interface Item {
+export interface ItemInterface {
   id: number;
   name: string;
   loserTo: number;

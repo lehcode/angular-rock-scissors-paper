@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { GameService } from '~/app/services/game.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Player } from '~/app/interfaces/player';
+import { PlayerInterface } from '~/app/interfaces/player.interface';
 import { tap } from 'rxjs';
 
 @Component({
@@ -15,7 +15,7 @@ import { tap } from 'rxjs';
 })
 export class WelcomeComponent {
   form: FormGroup;
-  player: Player | undefined;
+  player: PlayerInterface | undefined;
 
   constructor(
     private fb: FormBuilder,
@@ -30,7 +30,6 @@ export class WelcomeComponent {
       wins: 0,
       losses: 0,
     };
-
   }
 
   setName() {

@@ -1,0 +1,22 @@
+@if (!player?.name || player?.name !== 'Human') {
+  <h1>Welcome, Human!</h1>
+}
+<h2>Please tell me your name</h2>
+
+<div class="container-fluid">
+  <form [formGroup]="form" class="login-form">
+    <div class="row pb-3 pt-3">
+      <input type="text" placeholder="Player name" formControlName="name" />
+    </div>
+    <div class="row pb-3 pt-3">
+      <button
+        type="button"
+        class="btn btn-primary"
+        (click)="setName()"
+        [disabled]="!form.valid"
+      >
+        Play!
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,4 +1,4 @@
-import { GameStatsComponent } from '~/app/game-stats/game-stats.component';
+import { GameStatsComponent } from '~/app/hoc/game-stats/game-stats.component';
 import { Route } from '@angular/router';
 
 export default [
