@@ -9,12 +9,13 @@ import {
   bootstrap0CircleFill,
   bootstrapCardChecklist,
   bootstrapHouse,
-  bootstrapQuestionCircleFill
+  bootstrapQuestionCircleFill,
 } from '@ng-icons/bootstrap-icons';
 import { WelcomeComponent } from '~/app/hoc/welcome/welcome.component';
 import { GameModule } from '~/app/hoc/game/game.module';
 import { GameStatsComponent } from '~/app/hoc/game-stats/game-stats.component';
 import { CollapseComponent } from '~/app/components/collapse/collapse.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent],
@@ -32,8 +33,9 @@ import { CollapseComponent } from '~/app/components/collapse/collapse.component'
     WelcomeComponent,
     GameModule,
     GameStatsComponent,
-    CollapseComponent
+    CollapseComponent,
+    FormsModule,
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

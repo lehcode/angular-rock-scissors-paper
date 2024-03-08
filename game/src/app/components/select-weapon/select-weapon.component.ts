@@ -1,7 +1,9 @@
-import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { Weapon } from '~/app/interfaces/weapon';
-import { from, map, mergeMap, Observable, of, shareReplay, toArray } from 'rxjs';
+import { Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import { GameListItem } from '~/app/interfaces/game-list-item';
+import { GameService } from '~/app/services/game.service';
 
 @Component({
   selector: 'game-select-weapon',
@@ -9,35 +11,35 @@ import { AsyncPipe } from '@angular/common';
   imports: [AsyncPipe],
   templateUrl: './select-weapon.component.html',
   styleUrl: './select-weapon.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SelectWeaponComponent {
-  @Input() filteredWeapons$: Observable<Weapon[]> | undefined;
-  @Output() changeEvent: EventEmitter<string> = new EventEmitter<string>();
+  // @ts-ignore
+  allWeapons$: Observable<Weapon[]>;
+  @Input() selectedGame: GameListItem | undefined;
+  @Output() onWeaponSelect: EventEmitter<string> = new EventEmitter<string>();
   selectedWeapon: Weapon | undefined;
 
-  constructor() {}
+  constructor(private readonly gameService: GameService) {}
 
   changeWeapon(weapon: Weapon) {
     this.selectedWeapon = weapon;
-    this.changeEvent.emit(JSON.stringify(weapon));
+    this.onWeaponSelect.emit(JSON.stringify(weapon));
   }
 
   ngOnChanges(changes: SimpleChanges) {
     debugger;
 
-    const selected = this.selectedWeapon;
-    if (this.filteredWeapons$) {
-      this.filteredWeapons$ = this.filteredWeapons$.pipe(
-        mergeMap((weapons: Weapon[]) => from(weapons)),
-        map((weapon) => {
-          if (weapon.id !== selected?.id) {
-            return { ...weapon, selected: false };
+    if (changes.hasOwnProperty('selectedGame')) {
+      for (const propName in changes) {
+        if (changes.hasOwnProperty(propName)) {
+          switch (propName) {
+            case 'selectedGame': {
+              this.allWeapons$ = this.gameService.loadWeapons$(changes['selectedGame'].currentValue);
+            }
           }
-          return weapon;
-        }),
-        toArray(),
-        shareReplay(),
-      );
+        }
+      }
     }
   }
 }

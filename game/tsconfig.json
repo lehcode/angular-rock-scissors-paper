@@ -28,8 +28,11 @@
     "paths": {
       "~/*": ["./src/*"]
     },
-    "types": ["node", "jest"]
+    "types": ["node", "jest"],
+    "inlineSourceMap": true,
+    "inlineSources": true
   },
+  "sourceMap": true,
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,

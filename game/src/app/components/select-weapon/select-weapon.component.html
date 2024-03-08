@@ -1,5 +1,5 @@
-@if (filteredWeapons$ | async) {
-  @for(weapon of filteredWeapons$ | async; track weapon) {
+@if (allWeapons$ | async) {
+  @for(weapon of allWeapons$ | async; track weapon) {
   <div class="form-check col-sm-2">
     <input (change)="changeWeapon(weapon)" class="form-check-input" type="radio" role="switch" name="flexRadioDefault1" id="flexRadioDefault1">
     <label class="form-check-label" for="flexRadioDefault1">{{ weapon.name }}</label>

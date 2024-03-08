@@ -5,7 +5,7 @@ services:
     # image name and version based on environment variables
     image: game-app_node-v${CONTAINER_NODE_VERSION:?}
     # container name
-    container_name: demo-game
+    container_name: rsp-game
     # command to run on container startup
     command: /bin/bash /init.sh
     # build settings

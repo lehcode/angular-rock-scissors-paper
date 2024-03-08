@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { GameService } from '~/app/services/game.service';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
-import { GameMode } from '~/app/enums/game.mode';
+import { GameCode } from '~/app/enums/game-code';
 import { Observable } from 'rxjs';
 
 export interface GameRule {
@@ -18,12 +18,12 @@ export interface GameRule {
 })
 export class CollapseComponent {
   public isCollapsed = false;
-  public gameMode: GameMode = GameMode.RPS;
+  public gameCode: GameCode = GameCode.RPS;
   public gameRules$ = Observable<object[]>;
 
   constructor(gameService: GameService) {
-    this.gameMode = gameService.getGameMode();
+    this.gameCode = gameService.getDefaultGameCode();
   }
 
-  protected readonly GameMode = GameMode;
+  protected readonly GameMode = GameCode;
 }

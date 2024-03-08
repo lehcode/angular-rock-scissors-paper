@@ -3,7 +3,7 @@
     <button type="button" class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Select game</button>
     <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
       @for (game of allGames$ | async; track game) {
-        <button ngbDropdownItem (click)="selectGame(game)">{{ game.name }}</button>
+        <button ngbDropdownItem (click)="changeGame(game)">{{ game.name }}</button>
       }
     </div>
   </div>

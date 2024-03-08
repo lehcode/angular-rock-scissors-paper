@@ -11,7 +11,7 @@
         Computer
       }
     </div>
-    <div class="flex-fill"><select-game (changeEvent)="selectGame($event)"></select-game></div>
+    <div class="flex-fill"><select-game (onGameSelect)="changeGame($event)"></select-game></div>
     <div class="flex-fill">
       @if (selectedGame) {
         Human
@@ -31,7 +31,11 @@
       <ng-icon class="link-warning" name="bootstrapQuestionCircleFill" role="img"></ng-icon>
     </div>
   </div>
-  <div class="col-sm-12 select-weapon"><game-select-weapon (changeEvent)="changeWeapon($event)" [filteredWeapons$]="allWeapons$"></game-select-weapon></div>
+  @if (selectedGame) {
+    <div class="col-sm-12 select-weapon">
+      <game-select-weapon (onWeaponSelect)="changeWeapon($event)" [selectedGame]="selectedGame"></game-select-weapon>
+    </div>
+  }
 </div>
 <div class="row">
   <game-collapse></game-collapse>

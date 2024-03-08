@@ -11,7 +11,7 @@
 </p>
 <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
   <div class="card">
-    @if (gameMode == GameMode.RPS) {
+    @if (gameCode == GameMode.RPS) {
       <div class="card-body">
         <h1>Rock-Paper-Scissors</h1>
         <p>
@@ -30,10 +30,10 @@
           before "throwing".
         </p>
       </div>
-    } @else if(gameMode == GameMode.RPSW) {
+    } @else if(gameCode == GameMode.RPSW) {
     <h1>Rock-Paper-Scissors-Well</h1>
     <p>&nbsp;</p>
-    } @else if (gameMode == GameMode.RPSLS) {
+    } @else if (gameCode == GameMode.RPSLS) {
       <h1>Rock-Paper-Scissors-Spock-Lizard</h1>
       <p>
         One popular five-weapon expansion is "rock paper scissors Spock lizard",

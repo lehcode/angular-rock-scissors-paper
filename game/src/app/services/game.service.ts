@@ -1,36 +1,56 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, from, map, Observable, of, shareReplay, tap, throwError, toArray } from 'rxjs';
+import {
+  BehaviorSubject,
+  catchError,
+  from,
+  map,
+  mergeMap,
+  Observable,
+  of,
+  shareReplay,
+  tap,
+  throwError,
+  toArray,
+} from 'rxjs';
 import { Player } from '~/app/interfaces/player';
-import { GameMode } from '~/app/enums/game.mode';
+import { GameCode } from '~/app/enums/game-code';
 import { Weapon } from '~/app/interfaces/weapon';
 import { LocalStorageService } from '~/app/services/local-storage.service';
 import { GameResult } from '~/app/interfaces/game-result';
 import weapons from '~/app/weapons.json';
 import rules from '~/app/rules.json';
+import { GameListItem } from '~/app/interfaces/game-list-item';
+import { filter } from 'rxjs/operators';
 
 // Possible round outcomes
 // 0 - player lost
 // 1 - player won
 // 2 - tie
 const outcomes = {
-  [GameMode.RPS]: {
+  [GameCode.RPS]: {
     stone: [2, 0, 1],
     paper: [1, 2, 0],
     scissors: [0, 1, 2],
   },
-  [GameMode.RPSW]: {
+  [GameCode.RPSW]: {
     stone: [2, 0, 1, 0],
     paper: [1, 2, 0, 1],
     scissors: [0, 1, 2, 0],
     well: [1, 0, 1, 2],
   },
-  [GameMode.RPSLS]: {
+  [GameCode.RPSLS]: {
     stone: [2, 0, 1, 0, 1],
     paper: [1, 2, 0, 1, 0],
     scissors: [0, 1, 2, 0, 1],
     lizard: [1, 0, 1, 2, 0],
     spock: [0, 1, 0, 1, 2],
   },
+};
+
+export const namingMap = {
+  [GameCode.RPS]: 'Rock-Paper-Scissors',
+  [GameCode.RPSW]: 'Rock-Paper-Scissors-Well',
+  [GameCode.RPSLS]: 'Rock-Paper-Scissors-Lizard-Spock',
 };
 
 @Injectable({
@@ -71,33 +91,50 @@ export class GameService {
     return of(data);
   }
 
-  loadWeapons$(mode: GameMode): Observable<Weapon[]> {
-    return from(weapons).pipe(
-      map((props) => {
-        return props as Weapon;
-      }),
-      toArray(), // Convert emitted values to an array
-      // tap((weapon) => {
-      //   debugger;
-      //   console.log(weapon);
-      //   // this.weapons.push(weapon);
-      // }),
-      // shareReplay(),
-      // catchError((error) => {
-      //   const message = 'Could not load weapons';
-      //   console.log(message, error);
-      //   return throwError(error);
-      // }),
-    );
+  loadWeapons$(game: GameListItem | undefined): Observable<Weapon[]> {
+    let mapped;
+
+    if (!game) {
+      mapped = from(weapons).pipe(
+        map((weapon) => {
+          return weapon as Weapon;
+        }),
+      );
+    } else {
+      mapped = from(weapons).pipe(
+        // @ts-ignore
+        filter((weapon) => weapon.games.includes(game.code)),
+        map((weapon) => {
+          return weapon as Weapon;
+        }),
+      );
+    }
+
+    return mapped.pipe(toArray());
   }
 
-  loadWeapon(weapon: string) {}
+  getDefaultGame() {
+    return {
+      id: 1,
+      name: 'Rock-Paper-Scissors',
+      code: 'RPS',
+    };
+  }
 
-  getRules(mode: GameMode) {}
+  getDefaultGameCode() {
+    return GameCode.RPS;
+  }
 
-  setGameMode$(mode: GameMode) {}
-
-  getGameMode() {
-    return GameMode.RPS;
+  collectGamesList() {
+    return from(Object.keys(GameCode)).pipe(
+      map((gameCode) => {
+        // @ts-expect-error - In addition to creating an object with property names for
+        // members, numeric enums members also get a reverse mapping from enum values to
+        // enum names.
+        return { id: gameCode, name: namingMap[gameCode], code: GameCode[gameCode] } as GameListItem;
+      }),
+      filter((item) => item.name !== undefined),
+      toArray(),
+    );
   }
 }

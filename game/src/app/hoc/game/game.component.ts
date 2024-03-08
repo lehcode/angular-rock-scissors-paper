@@ -4,7 +4,7 @@ import { Player } from '~/app/interfaces/player';
 import { AsyncPipe } from '@angular/common';
 import { NgIcon } from '@ng-icons/core';
 import { CollapseComponent } from '~/app/components/collapse/collapse.component';
-import { GameMode } from '~/app/enums/game.mode';
+import { GameCode } from '~/app/enums/game-code';
 import { map, Observable, tap } from 'rxjs';
 import { Weapon } from '~/app/interfaces/weapon';
 import { SelectGameComponent } from '~/app/components/select-game/select-game.component';
@@ -23,9 +23,8 @@ export class GameComponent {
   playerLoaded = false;
   player: Player | undefined;
   weaponsLoaded = false;
+  protected gameMode: GameCode = GameCode.RPS;
   selectedGame: GameListItem | undefined;
-  protected gameMode: GameMode = GameMode.RPS;
-  @Output() allWeapons$: Observable<Weapon[]>;
   selectedWeapon: Weapon | undefined;
 
   constructor(private gameService: GameService) {
@@ -33,18 +32,17 @@ export class GameComponent {
       this.player = player;
       this.playerLoaded = true;
     });
-
-    this.allWeapons$ = this.gameService.loadWeapons$(this.gameMode);
-    // debugger;
   }
 
-  protected selectGame(gameData: string) {
-    debugger;
+  protected changeGame(gameData: string) {
     this.selectedGame = JSON.parse(gameData as string);
   }
 
   protected changeWeapon(weaponData: string) {
-    debugger;
     this.selectedWeapon = JSON.parse(weaponData as string);
+  }
+
+  ngOnChanges() {
+    debugger;
   }
 }
