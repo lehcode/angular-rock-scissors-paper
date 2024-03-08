@@ -1,8 +1,8 @@
-@if (allWeapons.length) {
-  @for(weapon of allWeapons; track weapon) {
-  <div class="form-check form-switch">
-    <input (change)="onWeaponSelected()" class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
-    <label class="form-check-label" for="flexSwitchCheckDefault">{{ weapon.name }}</label>
+@if (filteredWeapons$ | async) {
+  @for(weapon of filteredWeapons$ | async; track weapon) {
+  <div class="form-check col-sm-2">
+    <input (change)="changeWeapon(weapon)" class="form-check-input" type="radio" role="switch" name="flexRadioDefault1" id="flexRadioDefault1">
+    <label class="form-check-label" for="flexRadioDefault1">{{ weapon.name }}</label>
   </div>
   }
 }

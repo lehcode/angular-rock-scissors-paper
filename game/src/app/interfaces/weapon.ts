@@ -1,5 +1,6 @@
 export interface Weapon {
   id: number;
   name: string;
-  modes: number[];
+  games: string[];
+  selected: boolean;
 }

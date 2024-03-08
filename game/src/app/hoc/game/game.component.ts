@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { GameService } from '~/app/services/game.service';
 import { Player } from '~/app/interfaces/player';
 import { AsyncPipe } from '@angular/common';
@@ -17,6 +17,7 @@ import { GameListItem } from '~/app/interfaces/game-list-item';
   imports: [AsyncPipe, NgIcon, CollapseComponent, SelectGameComponent, SelectWeaponComponent],
   templateUrl: './game.component.html',
   styleUrl: './game.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GameComponent {
   playerLoaded = false;
@@ -24,8 +25,7 @@ export class GameComponent {
   weaponsLoaded = false;
   selectedGame: GameListItem | undefined;
   protected gameMode: GameMode = GameMode.RPS;
-  protected weapons$: Observable<Weapon[]>;
-  @Input() selectedGameData: string | undefined;
+  @Output() allWeapons$: Observable<Weapon[]>;
   selectedWeapon: Weapon | undefined;
 
   constructor(private gameService: GameService) {
@@ -34,19 +34,17 @@ export class GameComponent {
       this.playerLoaded = true;
     });
 
-    this.weapons$ = this.gameService.loadWeapons$(this.gameMode);
+    this.allWeapons$ = this.gameService.loadWeapons$(this.gameMode);
     // debugger;
   }
 
-  ngOnInit() {
+  protected selectGame(gameData: string) {
     debugger;
-    // console.log(this.selectedGame);
-    // console.log(this.weaponsLoaded);
+    this.selectedGame = JSON.parse(gameData as string);
   }
 
-  ngOnChanges() {}
-
-  protected selectGame(gameData: string) {
-    this.selectedGame = JSON.parse(gameData as string);
+  protected changeWeapon(weaponData: string) {
+    debugger;
+    this.selectedWeapon = JSON.parse(weaponData as string);
   }
 }

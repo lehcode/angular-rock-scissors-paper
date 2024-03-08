@@ -1,26 +1,38 @@
 [
   {
     "id": 1,
-    "name": "Rock"
+    "name": "Rock",
+    "games": ["RPS", "RPSW", "RPSLS"],
+    "selected": false
   },
   {
     "id": 2,
-    "name": "Paper"
+    "name": "Paper",
+    "games": ["RPS", "RPSW", "RPSLS"],
+    "selected": false
   },
   {
     "id": 3,
-    "name": "Scissors"
+    "name": "Scissors",
+    "games": ["RPS", "RPSW", "RPSLS"],
+    "selected": false
   },
   {
     "id": 4,
-    "name": "Well"
+    "name": "Well",
+    "games": ["RPSW"],
+    "selected": false
   },
   {
     "id": 5,
-    "name": "Lizard"
+    "name": "Lizard",
+    "games": ["RPSLS"],
+    "selected": false
   },
   {
     "id": 6,
-    "name": "Spock"
+    "name": "Spock",
+    "games": ["RPSLS"],
+    "selected": false
   }
 ]

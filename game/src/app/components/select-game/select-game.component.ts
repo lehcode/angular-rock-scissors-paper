@@ -21,7 +21,7 @@ const namingMap = {
   styleUrl: './select-game.component.scss',
 })
 export class SelectGameComponent {
-  private selectedGame: GameListItem | undefined;
+  selectedGame: GameListItem | undefined;
   allGames$: Observable<GameListItem[]>;
   @Output() changeEvent: EventEmitter<string> = new EventEmitter<string>();
 
