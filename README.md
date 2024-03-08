@@ -9,7 +9,7 @@
     - Environment variables
     - User/group mapping
 2. Yarn package manager
-3. [Angular application with NX tooling](https://nx.dev/concepts/integrated-vs-package-based#standalone-applications)
+3. Angular application
 
 ## Usage
 
