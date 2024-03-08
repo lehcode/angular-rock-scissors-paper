@@ -1,9 +1,43 @@
 <div class="row w-100 pt-3 pb-3">
-  <h1>Let's play, <b>{{ player.name }}</b>!</h1>
+  <h1>Let's play, <b>{{ player?.name }}</b>!</h1>
 </div>
-<div class="container-fluid">
-  <div class="row">
-
+<div class="container-fluid game-selectors d-flex flex-column">
+  <div class="pt-2 pb-2 d-flex flex-wrap">
+    <div class="flex-fill">
+      @if(selectedGame) {
+        Computer
+      }
+    </div>
+    <div class="flex-fill"><select-game (changeEvent)="selectGame($event)"></select-game></div>
+    <div class="flex-fill">
+      @if(selectedGame) {
+      Human
+      }
+    </div>
   </div>
-
+  <div class="pt-2 pb-2 d-flex flex-wrap">
+    <div class="flex-fill">
+      @if(!selectedGame) {
+      <ng-icon class="link-warning" name="bootstrapQuestionCircleFill" role="img"></ng-icon>
+      }
+    </div>
+    <div class="flex-fill">
+      @if(selectedGame) {
+        <span class="badge text-bg-info">Select your weapon for {{ selectedGame?.name }} game.</span>
+      }
+    </div>
+    <div class="flex-fill">
+      @if(!selectedGame) {
+        <ng-icon class="link-warning" name="bootstrapQuestionCircleFill" role="img"></ng-icon>
+      }
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="col-sm-12"><game-select-weapon></game-select-weapon></div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <game-collapse></game-collapse>
 </div>

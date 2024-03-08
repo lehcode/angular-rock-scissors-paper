@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { GameService } from '~/app/services/game.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { PlayerInterface } from '~/app/interfaces/player.interface';
-import { tap } from 'rxjs';
+import { Player } from '~/app/interfaces/player';
+import { catchError, tap, throwError } from 'rxjs';
 
 @Component({
   selector: 'game-welcome',
@@ -11,19 +11,19 @@ import { tap } from 'rxjs';
   imports: [ReactiveFormsModule],
   templateUrl: './welcome.component.html',
   styleUrl: './welcome.component.scss',
-  providers: [GameService]
+  providers: [GameService],
 })
 export class WelcomeComponent {
   form: FormGroup;
-  player: PlayerInterface | undefined;
+  player: Player | undefined;
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private gameService: GameService
+    private gameService: GameService,
   ) {
     this.form = fb.group({
-      name: ['', [Validators.required]]
+      name: ['', [Validators.required]],
     });
     this.player = {
       name: 'Human',
@@ -34,9 +34,15 @@ export class WelcomeComponent {
 
   setName() {
     const val = this.form.value;
-    this.player = {...this.player, name: val.name};
-    this.gameService.savePlayer(this.player).pipe(
-      tap((player) => console.log(`Player: ${player.name}:\nwins: ${player.wins},\nlosses: ${player.losses}`))
-  ).subscribe(() => this.router.navigate(['/game']));
+    this.player = { ...this.player, name: val.name };
+    this.gameService
+      .savePlayer$(this.player)
+      .pipe(tap((player) => console.log(`Player: ${player.name}:\nwins: ${player.wins},\nlosses: ${player.losses}`)))
+      .subscribe(
+        () => this.router.navigate(['/game']),
+        (err) => {
+          console.error(err);
+        },
+      );
   }
 }

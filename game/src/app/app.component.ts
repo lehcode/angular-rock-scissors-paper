@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { PlayerInterface } from '~/app/interfaces/player.interface';
+import { Player } from '~/app/interfaces/player';
 import { GameService } from '~/app/services/game.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'game-root',
@@ -8,9 +9,9 @@ import { GameService } from '~/app/services/game.service';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  player: PlayerInterface | undefined = undefined;
+  player$: Observable<Player>;
 
   constructor(gameService: GameService) {
-    this.player = gameService.getPlayer();
+    this.player$ = gameService.getPlayer$();
   }
 }
