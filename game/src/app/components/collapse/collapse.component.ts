@@ -22,7 +22,7 @@ export class CollapseComponent {
   public gameRules$ = Observable<object[]>;
 
   constructor(gameService: GameService) {
-    this.gameCode = gameService.getDefaultGameCode();
+    this.gameCode = gameService.defaultGameCode;
   }
 
   protected readonly GameMode = GameCode;

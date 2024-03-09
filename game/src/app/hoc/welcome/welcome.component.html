@@ -1,4 +1,4 @@
-@if (!player?.name || player?.name !== 'Human') {
+@if (player && (!player.name || player.name !== 'Human')) {
   <h1>Welcome, Human!</h1>
 }
 <h2>Please tell me your name</h2>

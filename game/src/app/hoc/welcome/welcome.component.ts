@@ -3,8 +3,11 @@ import { Router } from '@angular/router';
 import { GameService } from '~/app/services/game.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Player } from '~/app/interfaces/player';
-import { catchError, tap, throwError } from 'rxjs';
+import { tap } from 'rxjs';
 
+/**
+ * Component for the welcome page of the game.
+ */
 @Component({
   selector: 'game-welcome',
   standalone: true,
@@ -14,9 +17,22 @@ import { catchError, tap, throwError } from 'rxjs';
   providers: [GameService],
 })
 export class WelcomeComponent {
+  /**
+   * Form group for the player name input.
+   */
   form: FormGroup;
-  player: Player | undefined;
 
+  /**
+   * Player object with the current player's name and game stats.
+   */
+  player: Player;
+
+  /**
+   * Creates an instance of the WelcomeComponent.
+   * @param fb FormBuilder service for creating form groups.
+   * @param router Router service for navigating between pages.
+   * @param gameService GameService service for managing game data.
+   */
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -25,6 +41,7 @@ export class WelcomeComponent {
     this.form = fb.group({
       name: ['', [Validators.required]],
     });
+
     this.player = {
       name: 'Human',
       wins: 0,
@@ -32,6 +49,9 @@ export class WelcomeComponent {
     };
   }
 
+  /**
+   * Sets the player name and saves it to the game service.
+   */
   setName() {
     const val = this.form.value;
     this.player = { ...this.player, name: val.name };

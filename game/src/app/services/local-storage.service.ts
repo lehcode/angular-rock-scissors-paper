@@ -12,8 +12,8 @@ const GAMES_HISTORY = 'games_history';
 export class LocalStorageService {
   constructor() {}
 
-  loadPlayerData$() {
-    return JSON.parse(localStorage.getItem(PLAYER_DATA) as string);
+  loadPlayerData$(): Observable<Player> {
+    return of(JSON.parse(localStorage.getItem(PLAYER_DATA) as string));
   }
 
   persistPlayerData$(data: Player): Observable<Player> {
@@ -22,7 +22,7 @@ export class LocalStorageService {
       catchError((error) => {
         const message = 'Could not persist player data';
         console.log(message, error);
-        return throwError(error);
+        return throwError(() => error);
       }),
     );
   }

@@ -14,11 +14,14 @@ import { GameService } from '~/app/services/game.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SelectWeaponComponent {
-  // @ts-ignore
+  // @ts-expect-error: Property 'allWeapons$' does not exist on type 'SelectWeaponComponent'.
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   allWeapons$: Observable<Weapon[]>;
   @Input() selectedGame: GameListItem | undefined;
   @Output() onWeaponSelect: EventEmitter<string> = new EventEmitter<string>();
+  @Output() onWeaponsLoaded: EventEmitter<Weapon[]> = new EventEmitter<Weapon[]>();
   selectedWeapon: Weapon | undefined;
+  weaponsLoaded = false;
 
   constructor(private readonly gameService: GameService) {}
 
@@ -28,15 +31,15 @@ export class SelectWeaponComponent {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    debugger;
-
-    if (changes.hasOwnProperty('selectedGame')) {
-      for (const propName in changes) {
-        if (changes.hasOwnProperty(propName)) {
-          switch (propName) {
-            case 'selectedGame': {
-              this.allWeapons$ = this.gameService.loadWeapons$(changes['selectedGame'].currentValue);
-            }
+    for (const propName in changes) {
+      if (changes.hasOwnProperty(propName)) {
+        switch (propName) {
+          case 'selectedGame': {
+            this.allWeapons$ = this.gameService.loadWeapons$(changes['selectedGame'].currentValue);
+            this.allWeapons$.subscribe((weapons) => {
+              this.weaponsLoaded = true;
+              this.onWeaponsLoaded.emit(weapons);
+            });
           }
         }
       }

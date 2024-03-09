@@ -1,8 +1,8 @@
-@if (allGames$) {
+@if (allGames && allGames.length > 0) {
   <div ngbDropdown class="d-inline-block">
     <button type="button" class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Select game</button>
     <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-      @for (game of allGames$ | async; track game) {
+      @for (game of allGames; track game) {
         <button ngbDropdownItem (click)="changeGame(game)">{{ game.name }}</button>
       }
     </div>

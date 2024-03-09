@@ -1,6 +1,6 @@
 <div class="row w-100 pt-3 pb-3">
   <h1>
-    Let's play, <b>{{ player?.name }}</b
+    Let's play, <b>{{ humanPlayer?.name }}</b
     >!
   </h1>
 </div>
@@ -22,9 +22,11 @@
     <div class="flex-fill">
       <ng-icon class="link-warning" name="bootstrapQuestionCircleFill" role="img"></ng-icon>
     </div>
-    <div class="flex-fill">
+    <div class="flex-fill flex-column">
       @if (selectedGame) {
-        <span class="badge text-bg-info">Select your weapon for {{ selectedGame.name }} game.</span>
+        <div class="badge text-bg-info">
+          Select your weapon for {{ selectedGame.name }} game.<br />This will start a new game
+        </div>
       }
     </div>
     <div class="flex-fill">
@@ -33,7 +35,7 @@
   </div>
   @if (selectedGame) {
     <div class="col-sm-12 select-weapon">
-      <game-select-weapon (onWeaponSelect)="changeWeapon($event)" [selectedGame]="selectedGame"></game-select-weapon>
+      <game-select-weapon (onWeaponSelect)="playRound($event)" (onWeaponsLoaded)="setWeapons($event)" [selectedGame]="selectedGame"></game-select-weapon>
     </div>
   }
 </div>

@@ -1,12 +1,10 @@
-import { Weapon } from '~/app/interfaces/weapon';
-import { Player } from '~/app/interfaces/player';
-import { GameCode } from '~/app/enums/game-code';
+import { GameListItem } from '~/app/interfaces/game-list-item';
 
 export interface GameResult {
-  id: number;
-  date: number;
-  game: GameCode;
-  playerItem: Weapon;
-  computerItem: Weapon;
-  winner: Player;
+  id: number | null;
+  date: string;
+  game: GameListItem;
+  humanWeapon: string;
+  pcWeapon: string;
+  winner: string;
 }
