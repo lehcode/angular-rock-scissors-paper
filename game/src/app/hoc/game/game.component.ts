@@ -8,12 +8,21 @@ import { Weapon } from '~/app/interfaces/weapon';
 import { SelectGameComponent } from '~/app/components/select-game/select-game.component';
 import { SelectWeaponComponent } from '~/app/components/select-weapon/select-weapon.component';
 import { GameListItem } from '~/app/interfaces/game-list-item';
+import { GameResult } from '~/app/interfaces/game-result';
+import { GameResultDisplayComponent } from '~/app/components/game-result-display/game-result-display.component';
 
 // GameComponent handles the game logic
 @Component({
   selector: 'game-game',
   standalone: true,
-  imports: [AsyncPipe, NgIcon, CollapseComponent, SelectGameComponent, SelectWeaponComponent],
+  imports: [
+    AsyncPipe,
+    NgIcon,
+    CollapseComponent,
+    SelectGameComponent,
+    SelectWeaponComponent,
+    GameResultDisplayComponent,
+  ],
   templateUrl: './game.component.html',
   styleUrl: './game.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -27,6 +36,7 @@ export class GameComponent {
   selectedGame: GameListItem | undefined;
   selectedWeapon: Weapon | undefined;
   allWeapons: Weapon[] | undefined;
+  lastResult: GameResult | undefined;
 
   /**
    * Initializes player data subscriptions
@@ -56,15 +66,25 @@ export class GameComponent {
   protected playRound(weaponData: string) {
     this.selectedWeapon = JSON.parse(weaponData) as Weapon;
     const pcWeaponIndex = this.gameService.getRandomWeaponIndex(this.allWeapons!.length);
-    debugger;
     const pcWeapon = this.allWeapons!.find((weapon) => {
       return weapon.id === pcWeaponIndex;
     });
 
+    let result: GameResult;
+
     if (pcWeapon?.id === this.selectedWeapon.id) {
       console.log(`Result: Tie (${this.selectedWeapon.name} vs ${pcWeapon.name})`);
+      result = {
+        id: this.gameService.gameSessionId,
+        game: this.selectedGame as GameListItem,
+        date: new Date().toISOString(),
+        player: this.humanPlayer as Player,
+        humanWeapon: this.selectedWeapon.name,
+        pcWeapon: pcWeapon.name,
+        winner: 'TIE',
+      };
     } else {
-      this.gameService.calculateRoundResult(
+      result = this.gameService.calculateRoundResult(
         this.selectedGame as GameListItem,
         this.selectedWeapon,
         pcWeapon as Weapon,
@@ -72,7 +92,16 @@ export class GameComponent {
       );
     }
 
-    this.gameService.storeRoundResult();
+    this.lastResult = result;
+    this.gameService.saveRoundResult(this.lastResult);
+
+    if (result.winner == this.humanPlayer!.name) {
+      this.humanPlayer!.wins++;
+    } else if (result.winner == this.pcPlayer!.name) {
+      this.humanPlayer!.losses++;
+    }
+
+    this.gameService.savePlayer$(this.humanPlayer as Player);
   }
 
   /**

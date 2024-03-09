@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, from, map, Observable, shareReplay, tap, throwError, toArray } from 'rxjs';
+import { BehaviorSubject, catchError, from, map, Observable, of, shareReplay, tap, throwError, toArray } from 'rxjs';
 import { Player } from '~/app/interfaces/player';
 import { GameCode } from '~/app/enums/game-code';
 import { Weapon } from '~/app/interfaces/weapon';
@@ -8,6 +8,7 @@ import { GameResult } from '~/app/interfaces/game-result';
 import weapons from '~/app/weapons.json';
 import { GameListItem } from '~/app/interfaces/game-list-item';
 import { filter } from 'rxjs/operators';
+import { LocalStorageKeys } from '~/app/enums/local-storage-keys';
 
 // Possible round outcomes
 // 0 - player lost
@@ -53,12 +54,11 @@ export class GameService {
 
   /**
    * Creates an instance of the game service.
-   * @param storageService - The service for managing local storage.
    */
   constructor(private storageService: LocalStorageService) {
     this.nameSpecified$ = this.player$.pipe(map((player) => !!player?.name));
-    this.player$ = storageService.loadPlayerData$();
-    // const gamesHistory$ = storageService.loadGamesHistory$();
+    this.player$ = storageService.playerData$;
+    this.gamesHistory$ = storageService.gamesHistory$;
   }
 
   /**
@@ -67,24 +67,17 @@ export class GameService {
    * @param player - The player data to save.
    * @returns The saved player data.
    */
-  savePlayer$(player: Player): Observable<Player> {
+  savePlayer$(player: Player) {
     // Emit the user object and store it in local storage
     const playerData: Player = { ...player };
     this.playerSubject.next(playerData);
 
-    return this.storageService.persistPlayerData$(playerData).pipe(
-      tap((player) => console.log(`Player: ${player.name}:\nwins: ${player.wins},\nlosses: ${player.losses}`)),
-      shareReplay(),
-      catchError((error) => {
-        const message = 'Error saving player data';
-        console.log(message, error);
-        return throwError(() => error);
-      }),
-    );
+    this.storageService.insert$(LocalStorageKeys.PLAYER_DATA, playerData as Player);
+    return of(playerData);
   }
 
-  get humanPlayer$(): Observable<Player> {
-    return this.storageService.loadPlayerData$();
+  get humanPlayer$() {
+    return this.storageService.playerData$;
   }
 
   /**
@@ -93,11 +86,11 @@ export class GameService {
    * @returns An observable that emits an array of weapons.
    */
   loadWeapons$(game: GameListItem | undefined): Observable<Weapon[]> {
-    let mapped;
+    let resolved;
 
     if (game) {
       // Filter weapons by the given game code
-      mapped = from(weapons).pipe(
+      resolved = from(weapons).pipe(
         filter((weapon) => weapon.games.includes(game.code)),
         map((weapon) => {
           return weapon as Weapon;
@@ -105,14 +98,14 @@ export class GameService {
       );
     } else {
       // Return all weapons
-      mapped = from(weapons).pipe(
+      resolved = from(weapons).pipe(
         map((weapon) => {
           return weapon as Weapon;
         }),
       );
     }
 
-    return mapped.pipe(toArray());
+    return resolved.pipe(toArray());
   }
 
   get defaultGameCode() {
@@ -154,7 +147,7 @@ export class GameService {
     // @ts-expect-error
     const outcome = outcomes[`${game.id}`][`${humanWeapon.name.toLowerCase()}`];
     const winLoss = outcome[pcWeapon.id - 1];
-    let playerName: string | undefined;
+    let playerMock: Player | undefined;
 
     switch (winLoss) {
       // Human lost the game
@@ -165,7 +158,7 @@ export class GameService {
         this.player$.subscribe((player) => {
           if (player !== null) {
             player.losses++;
-            playerName = player.name;
+            playerMock = player;
           }
           this.playerSubject.next(player);
         });
@@ -178,7 +171,7 @@ export class GameService {
         this.player$.subscribe((player) => {
           if (player !== null) {
             player.wins++;
-            playerName = player.name;
+            playerMock = player;
           }
           this.playerSubject.next(player);
         });
@@ -191,15 +184,39 @@ export class GameService {
       id: this.gameSessionId,
       game: game,
       date: new Date().toISOString(),
+      player: playerMock,
       humanWeapon: humanWeapon.name,
       pcWeapon: pcWeapon.name,
-      winner: winLoss === 1 ? (playerName as string) : pcPlayer.name,
+      winner: winLoss === 1 ? (playerMock?.name as string) : pcPlayer.name,
     } as GameResult;
   }
 
   get gameSessionId() {
-    return Math.floor(Math.random() * 10000000);
+    return this.generateHash$(Math.floor(Math.random() * 10000000).toString());
   }
 
-  storeRoundResult() {}
+  private generateHash$(value: string) {
+    const crypto = window.crypto;
+    const buffer = this.str2ab(value);
+    return from(crypto.subtle.digest('SHA-1', buffer)).pipe(
+      map((bytes) => {
+        return Array.from(new Uint8Array(bytes))
+          .map((b) => b.toString(16).padStart(2, '0'))
+          .join('');
+      }),
+    );
+  }
+
+  private str2ab(str: string) {
+    const buf = new ArrayBuffer(str.length);
+    const bufView = new Uint8Array(buf);
+    for (let i = 0, strLen = str.length; i < strLen; i++) {
+      bufView[i] = str.charCodeAt(i);
+    }
+    return buf;
+  }
+
+  saveRoundResult(data: GameResult) {
+    this.storageService.insert$(LocalStorageKeys.GAMES_HISTORY, data as GameResult);
+  }
 }

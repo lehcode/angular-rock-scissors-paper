@@ -15,13 +15,15 @@ export class AppComponent {
   /**
    * The observable of the human player.
    */
-  humanPlayer$: Observable<Player>;
+  humanPlayer: Player | undefined;
 
   /**
    * Creates an instance of the app component.
    * @param gameService - The game service.
    */
   constructor(gameService: GameService) {
-    this.humanPlayer$ = gameService.humanPlayer$;
+    gameService.humanPlayer$.subscribe((player: Player) => {
+      this.humanPlayer = player;
+    });
   }
 }

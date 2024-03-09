@@ -35,7 +35,7 @@ export class SelectWeaponComponent {
       if (changes.hasOwnProperty(propName)) {
         switch (propName) {
           case 'selectedGame': {
-            this.allWeapons$ = this.gameService.loadWeapons$(changes['selectedGame'].currentValue);
+            this.allWeapons$ = this.gameService.loadWeapons$(changes[propName].currentValue);
             this.allWeapons$.subscribe((weapons) => {
               this.weaponsLoaded = true;
               this.onWeaponsLoaded.emit(weapons);

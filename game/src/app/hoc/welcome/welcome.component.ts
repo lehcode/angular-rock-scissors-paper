@@ -43,10 +43,12 @@ export class WelcomeComponent {
     });
 
     this.player = {
+      id: undefined,
+      weapon: undefined,
       name: 'Human',
       wins: 0,
       losses: 0,
-    };
+    } as Player;
   }
 
   /**
@@ -55,6 +57,7 @@ export class WelcomeComponent {
   setName() {
     const val = this.form.value;
     this.player = { ...this.player, name: val.name };
+
     this.gameService
       .savePlayer$(this.player)
       .pipe(tap((player) => console.log(`Player: ${player.name}:\nwins: ${player.wins},\nlosses: ${player.losses}`)))
