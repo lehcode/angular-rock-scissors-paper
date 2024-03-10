@@ -9,12 +9,13 @@ import { SelectWeaponComponent } from '~/app/components/select-weapon/select-wea
 import { GameListItem } from '~/app/interfaces/game-list-item';
 import { GameResult } from '~/app/interfaces/game-result';
 import { GameResultDisplayComponent } from '~/app/components/game-result-display/game-result-display.component';
+import { RouterOutlet } from '@angular/router';
 
 // GameComponent handles the game logic
 @Component({
   selector: 'game-game',
   standalone: true,
-  imports: [AsyncPipe, NgIcon, SelectGameComponent, SelectWeaponComponent, GameResultDisplayComponent],
+  imports: [AsyncPipe, NgIcon, SelectGameComponent, SelectWeaponComponent, GameResultDisplayComponent, RouterOutlet],
   templateUrl: './game.component.html',
   styleUrl: './game.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

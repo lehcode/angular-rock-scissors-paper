@@ -1,20 +1,24 @@
 <h2>History</h2>
 
-<h2>Results</h2>
-
 <table>
   <thead>
-  <th>id</th>
-  <th>date</th>
-  <th>game</th>
-  <th>humanWeapon</th>
-  <th>pcWeapon</th>
-  <th>playerName</th>
-  <th>winner</th>
+    <th>date</th>
+    <th>game</th>
+    <th>humanWeapon</th>
+    <th>pcWeapon</th>
+    <th>playerName</th>
+    <th>winner</th>
   </thead>
   <tbody>
-  <tr>
-    <td></td>
-  </tr>
+    @for (row of history$ | async; track row) {
+      <tr>
+        <td>{{ row.date | date: 'short' }}</td>
+        <td>{{ row.game.code }}</td>
+        <td>{{ row.humanWeapon }}</td>
+        <td>{{ row.pcWeapon }}</td>
+        <td>{{ row.player.name }}</td>
+        <td>{{ row.winner?.name }}</td>
+      </tr>
+    }
   </tbody>
 </table>
