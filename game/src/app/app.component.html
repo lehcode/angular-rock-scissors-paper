@@ -1,15 +1,13 @@
-<div class="container-fluid d-flex flex-row pt-4">
+<div class="d-flex flex-row p-0">
   <game-sidebar></game-sidebar>
 
-  <div class="d-flex w-100 flex-column justify-content-top align-items-stretch">
-    <div class="container-fluid">
-      <div class="row">
-        <main class="justify-content-center">
-          <p>Congratulations! App is running. 🎉</p>
-        </main>
+  <div class="container-fluid">
+    <div class="d-flex flex-column justify-content-top align-items-stretch">
+      <main class="justify-content-center">
+        <p>Congratulations! App is running. 🎉</p>
+      </main>
 
-        <router-outlet />
-      </div>
+      <router-outlet />
     </div>
   </div>
 </div>

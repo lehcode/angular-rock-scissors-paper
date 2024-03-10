@@ -1,26 +1,17 @@
-<div class="d-flex flex-column sidebar" style="width: 4.5rem;">
+<div class="sidebar">
   <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
-    <li>
-      <a class="nav-link py-3 border-bottom rounded-0" routerLink="/welcome">
-        Welcome
+    <li class="nav-item" id="homeLink">
+      <a class="nav-link py-3 border-bottom rounded-0" routerLink="/welcome" routerLinkActive="active" ngbTooltip="Home" placement="end">
         <ng-icon name="bootstrapHouse" role="img"></ng-icon>
       </a>
     </li>
-    <li class="nav-item">
-      Play
-      <a class="nav-link active py-3 border-bottom rounded-0" routerLink="/game">
-        <ng-icon name="bootstrapCardChecklist" role="img"></ng-icon>
+    <li class="nav-item" id="playLink">
+      <a class="nav-link py-3 border-bottom rounded-0" routerLink="/game" routerLinkActive="active" ngbTooltip="Play" placement="end">
+        <ng-icon name="bootstrapCaretRightSquare" role="img"></ng-icon>
       </a>
     </li>
-    <li class="nav-item">
-      <a class="nav-link active py-3 border-bottom rounded-0" routerLink="/game/stats">
-        Stats
-        <ng-icon name="bootstrapCardChecklist" role="img"></ng-icon>
-      </a>
-    </li>
-    <li class="nav-item">
-      Help
-      <a class="nav-link active py-3 border-bottom rounded-0">
+    <li class="nav-item" id="statsLink">
+      <a class="nav-link py-3 border-bottom rounded-0" routerLink="/game/stats" routerLinkActive="active"  ngbTooltip="Stats" placement="end">
         <ng-icon name="bootstrapCardChecklist" role="img"></ng-icon>
       </a>
     </li>

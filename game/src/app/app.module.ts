@@ -8,6 +8,7 @@ import { NgIconsModule } from '@ng-icons/core';
 import {
   bootstrap0CircleFill,
   bootstrapCardChecklist,
+  bootstrapCaretRightSquare,
   bootstrapHouse,
   bootstrapQuestionCircleFill,
 } from '@ng-icons/bootstrap-icons';
@@ -27,6 +28,7 @@ import { FormsModule } from '@angular/forms';
       bootstrapCardChecklist,
       bootstrapHouse,
       bootstrapQuestionCircleFill,
+      bootstrapCaretRightSquare,
     }),
     SidebarComponent,
     WelcomeComponent,
