@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, inject, Output, TemplateRef } from '@angular/core';
-import { NgbDatepickerModule, NgbDropdownModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDropdownModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { GameListItem } from '~/app/interfaces/game-list-item';
 import { GameService } from '~/app/services/game.service';
 import { AsyncPipe } from '@angular/common';
+import { GameRulesDisplayComponent } from '~/app/components/game-rules-display/game-rules-display.component';
 
 /**
  * Component for selecting a game from a list of games.
@@ -10,7 +11,7 @@ import { AsyncPipe } from '@angular/common';
 @Component({
   selector: 'select-game',
   standalone: true,
-  imports: [NgbDropdownModule, AsyncPipe, NgbDatepickerModule],
+  imports: [NgbDropdownModule, AsyncPipe, GameRulesDisplayComponent],
   templateUrl: './select-game.component.html',
   styleUrl: './select-game.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
