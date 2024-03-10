@@ -3,7 +3,6 @@ import { GameService } from '~/app/services/game.service';
 import { Player } from '~/app/interfaces/player';
 import { AsyncPipe } from '@angular/common';
 import { NgIcon } from '@ng-icons/core';
-import { CollapseComponent } from '~/app/components/collapse/collapse.component';
 import { Weapon } from '~/app/interfaces/weapon';
 import { SelectGameComponent } from '~/app/components/select-game/select-game.component';
 import { SelectWeaponComponent } from '~/app/components/select-weapon/select-weapon.component';
@@ -15,14 +14,7 @@ import { GameResultDisplayComponent } from '~/app/components/game-result-display
 @Component({
   selector: 'game-game',
   standalone: true,
-  imports: [
-    AsyncPipe,
-    NgIcon,
-    CollapseComponent,
-    SelectGameComponent,
-    SelectWeaponComponent,
-    GameResultDisplayComponent,
-  ],
+  imports: [AsyncPipe, NgIcon, SelectGameComponent, SelectWeaponComponent, GameResultDisplayComponent],
   templateUrl: './game.component.html',
   styleUrl: './game.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

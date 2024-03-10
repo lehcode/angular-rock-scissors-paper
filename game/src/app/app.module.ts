@@ -14,7 +14,6 @@ import {
 import { WelcomeComponent } from '~/app/hoc/welcome/welcome.component';
 import { GameModule } from '~/app/hoc/game/game.module';
 import { GameStatsComponent } from '~/app/hoc/game-stats/game-stats.component';
-import { CollapseComponent } from '~/app/components/collapse/collapse.component';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({

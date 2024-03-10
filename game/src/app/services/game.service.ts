@@ -30,15 +30,24 @@ const outcomes = {
     rock: [2, 0, 1, 0, 1],
     paper: [1, 2, 0, 1, 0],
     scissors: [0, 1, 2, 0, 1],
-    lizard: [1, 0, 1, 2, 0],
-    spock: [0, 1, 0, 1, 2],
+    spock: [1, 0, 1, 2, 0],
+    lizard: [0, 1, 0, 1, 2],
+  },
+  [GameCode.RPSLSG]: {
+    rock: [2, 0, 1, 0, 1, 2],
+    paper: [1, 2, 0, 1, 0, 1],
+    scissors: [0, 1, 2, 0, 1, 0],
+    spock: [1, 0, 1, 2, 0, 1],
+    lizard: [0, 1, 0, 1, 2, 0],
+    gem: [1, 0, 1, 0, 1, 2],
   },
 };
 
 export const namingMap = {
   [GameCode.RPS]: 'Rock-Paper-Scissors',
   [GameCode.RPSW]: 'Rock-Paper-Scissors-Well',
-  [GameCode.RPSLS]: 'Rock-Paper-Scissors-Lizard-Spock',
+  [GameCode.RPSLS]: 'Rock-Paper-Scissors-Spock-Lizard',
+  [GameCode.RPSLSG]: 'Rock-Paper-Scissors-Spock-Lizard-Gem',
 };
 
 @Injectable({
