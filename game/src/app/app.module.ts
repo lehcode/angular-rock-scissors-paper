@@ -33,7 +33,6 @@ import { FormsModule } from '@angular/forms';
     WelcomeComponent,
     GameModule,
     GameStatsComponent,
-    CollapseComponent,
     FormsModule,
   ],
   bootstrap: [AppComponent],

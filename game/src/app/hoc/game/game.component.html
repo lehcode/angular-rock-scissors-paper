@@ -5,42 +5,32 @@
   </h1>
 </div>
 <div class="container-fluid game-selectors d-flex flex-column">
-  <div class="pt-2 pb-2 d-flex flex-wrap">
-    <div class="col-sm-3">
-      @if (selectedGame) {
-        Computer
-      }
-    </div>
+  <div class="pt-2 pb-2 d-flex justify-content-center">
     <div class="col-sm-6"><select-game (onGameSelect)="changeGame($event)"></select-game></div>
+  </div>
+  <div class="pt-2 pb-2 d-flex flex-wrap">
     <div class="col-sm-3">
       @if (selectedGame) {
-        Human
+        <p>Computer<br/><ng-icon class="link-warning" name="bootstrapQuestionCircleFill" role="img"></ng-icon></p>
+      }
+    </div>
+    <div class="col-sm-6">
+      @if(lastResult) {
+        <game-result-display class="col-sm-12" [result]="lastResult"></game-result-display>
+      }
+    </div>
+    <div class="col-sm-3">
+      @if (selectedGame) {
+        <p>Human<br/><ng-icon class="link-warning" name="bootstrapQuestionCircleFill" role="img"></ng-icon></p>
       }
     </div>
   </div>
-  <div class="pt-2 pb-2 d-flex flex-wrap">
-    <div class="col-sm-3">
-      <ng-icon class="link-warning" name="bootstrapQuestionCircleFill" role="img"></ng-icon>
-    </div>
-    <div class="col-sm-6">&nbsp;</div>
-    <div class="col-sm-3">
-      <ng-icon class="link-warning" name="bootstrapQuestionCircleFill" role="img"></ng-icon>
-    </div>
-  </div>
-  <div class="pt-2 pb-2 d-flex flex-wrap">
-    <div class="col-sm-3">&nbsp;</div>
+  <div class="pt-2 pb-2 d-flex justify-content-center">
   @if (selectedGame) {
     <div class="col-sm-6 select-weapon">
       <game-select-weapon (onWeaponSelect)="playRound($event)" (onWeaponsLoaded)="setWeapons($event)" [selectedGame]="selectedGame"></game-select-weapon>
     </div>
   }
-    <div class="col-sm-3">&nbsp;</div>
   </div>
+</div>
 
-  @if(lastResult) {
-    <game-result-display class="col-sm-12" [result]="lastResult"></game-result-display>
-  }
-</div>
-<div class="row">
-  <game-collapse></game-collapse>
-</div>

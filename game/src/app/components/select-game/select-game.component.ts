@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
-import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { ChangeDetectionStrategy, Component, EventEmitter, inject, Output, TemplateRef } from '@angular/core';
+import { NgbDatepickerModule, NgbDropdownModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { GameListItem } from '~/app/interfaces/game-list-item';
 import { GameService } from '~/app/services/game.service';
 import { AsyncPipe } from '@angular/common';
@@ -10,7 +10,7 @@ import { AsyncPipe } from '@angular/common';
 @Component({
   selector: 'select-game',
   standalone: true,
-  imports: [NgbDropdownModule, AsyncPipe],
+  imports: [NgbDropdownModule, AsyncPipe, NgbDatepickerModule],
   templateUrl: './select-game.component.html',
   styleUrl: './select-game.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -31,6 +31,9 @@ export class SelectGameComponent {
    */
   @Output() onGameSelect: EventEmitter<string> = new EventEmitter<string>();
 
+  private modalService = inject(NgbModal);
+  closeResult = '';
+
   /**
    * Creates an instance of SelectGameComponent.
    * @param gameService The game service.
@@ -46,5 +49,11 @@ export class SelectGameComponent {
   changeGame(selectedGame: GameListItem) {
     this.selectedGame = selectedGame;
     this.onGameSelect.emit(JSON.stringify(selectedGame));
+  }
+
+  showRules(content: TemplateRef<any>) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    });
   }
 }
