@@ -1,7 +1,4 @@
 import { Component } from '@angular/core';
-import { Player } from '~/app/interfaces/player';
-import { GameService } from '~/app/services/game.service';
-import { Observable } from 'rxjs';
 
 /**
  * The root component of the game.
@@ -12,18 +9,5 @@ import { Observable } from 'rxjs';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  /**
-   * The observable of the human player.
-   */
-  humanPlayer: Player | undefined;
-
-  /**
-   * Creates an instance of the app component.
-   * @param gameService - The game service.
-   */
-  constructor(gameService: GameService) {
-    gameService.humanPlayer$.subscribe((player: Player) => {
-      this.humanPlayer = player;
-    });
-  }
+  constructor() {}
 }

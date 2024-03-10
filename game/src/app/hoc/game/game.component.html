@@ -6,31 +6,36 @@
 </div>
 <div class="container-fluid game-selectors d-flex flex-column">
   <div class="pt-2 pb-2 d-flex flex-wrap">
-    <div class="flex-fill">
+    <div class="col-sm-3">
       @if (selectedGame) {
         Computer
       }
     </div>
-    <div class="flex-fill"><select-game (onGameSelect)="changeGame($event)"></select-game></div>
-    <div class="flex-fill">
+    <div class="col-sm-6"><select-game (onGameSelect)="changeGame($event)"></select-game></div>
+    <div class="col-sm-3">
       @if (selectedGame) {
         Human
       }
     </div>
   </div>
   <div class="pt-2 pb-2 d-flex flex-wrap">
-    <div class="flex-fill">
+    <div class="col-sm-3">
       <ng-icon class="link-warning" name="bootstrapQuestionCircleFill" role="img"></ng-icon>
     </div>
-    <div class="flex-fill">
+    <div class="col-sm-6">&nbsp;</div>
+    <div class="col-sm-3">
       <ng-icon class="link-warning" name="bootstrapQuestionCircleFill" role="img"></ng-icon>
     </div>
   </div>
+  <div class="pt-2 pb-2 d-flex flex-wrap">
+    <div class="col-sm-3">&nbsp;</div>
   @if (selectedGame) {
-    <div class="col-sm-12 select-weapon">
+    <div class="col-sm-6 select-weapon">
       <game-select-weapon (onWeaponSelect)="playRound($event)" (onWeaponsLoaded)="setWeapons($event)" [selectedGame]="selectedGame"></game-select-weapon>
     </div>
   }
+    <div class="col-sm-3">&nbsp;</div>
+  </div>
 
   @if(lastResult) {
     <game-result-display class="col-sm-12" [result]="lastResult"></game-result-display>

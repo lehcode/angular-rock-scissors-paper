@@ -187,7 +187,7 @@ export class GameService {
       player: playerMock,
       humanWeapon: humanWeapon.name,
       pcWeapon: pcWeapon.name,
-      winner: winLoss === 1 ? (playerMock?.name as string) : pcPlayer.name,
+      winner: winLoss === 1 ? playerMock : pcPlayer,
     } as GameResult;
   }
 

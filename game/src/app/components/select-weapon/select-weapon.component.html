@@ -1,14 +1,21 @@
 @if (allWeapons$ | async) {
   <div class="flex-fill flex-column pb-3">
-      <div class="badge text-bg-info">
-        Select your weapon for {{ selectedGame?.name }} game.<br />This will start a new game
-      </div>
+    <span class="badge text-bg-info"> Select your weapon for {{ selectedGame?.name }} game. </span>
+    <br class="clearfix" />
+    <span class="badge text-bg-danger">This will start a new game</span>
   </div>
 
-  @for(weapon of allWeapons$ | async; track weapon) {
-  <div class="form-check col-sm-2">
-    <input (change)="changeWeapon(weapon)" class="form-check-input" type="radio" role="switch" name="changeWeaponRadio" id="changeWeaponRadio">
-    <label class="form-check-label" for="changeWeaponRadio">{{ weapon.name }}</label>
-  </div>
+  @for (weapon of allWeapons$ | async; track weapon) {
+    <div class="form-check col-sm-2">
+      <input
+        (change)="changeWeapon(weapon)"
+        class="form-check-input"
+        type="radio"
+        role="switch"
+        name="changeWeaponRadio"
+        id="changeWeaponRadio"
+      />
+      <label class="form-check-label" for="changeWeaponRadio">{{ weapon.name }}</label>
+    </div>
   }
 }

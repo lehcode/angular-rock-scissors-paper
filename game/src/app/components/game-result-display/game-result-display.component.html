@@ -1,18 +1,24 @@
-<h2>Results</h2>
+@if (!winner) {
+  <h2>
+    <span class="badge text-bg-warning">Tie</span>
+  </h2>
+  <br />
+} @else {
+  @if (winner.name === playerName) {
+    <h2>
+      Winner: {{ winner.name }}<br />
+      <span class="badge text-bg-success">!!! Well Done !!!</span>
+    </h2>
 
-<table>
-  <thead>
-  <th>id</th>
-  <th>date</th>
-  <th>game</th>
-  <th>humanWeapon</th>
-  <th>pcWeapon</th>
-  <th>playerName</th>
-  <th>winner</th>
-  </thead>
-  <tbody>
-  <tr>
-    <td></td>
-  </tr>
-  </tbody>
-</table>
+    <p class="badge text-bg-success">wins: {{ winner.wins }}</p>&nbsp;
+    <p class="badge text-bg-danger">losses: {{ winner.losses }}</p>
+  } @else if (winner.name === 'PC') {
+    <h2>
+      Winner: {{ winner.name }}<br />
+      <span class="badge text-bg-danger">Machines uprising!</span>
+    </h2>
+    <p>Keep going! You'll do better next time!</p>
+  }
+}
+<br/>
+<h3><span class="badge text-bg-primary">Human with {{ humanWeapon }} vs PC with {{ pcWeapon }}</span></h3>

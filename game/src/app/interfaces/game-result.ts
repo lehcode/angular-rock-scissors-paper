@@ -9,5 +9,5 @@ export interface GameResult {
   player: Player;
   humanWeapon: string;
   pcWeapon: string;
-  winner: string;
+  winner: Player | undefined;
 }

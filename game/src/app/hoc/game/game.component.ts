@@ -81,7 +81,7 @@ export class GameComponent {
         player: this.humanPlayer as Player,
         humanWeapon: this.selectedWeapon.name,
         pcWeapon: pcWeapon.name,
-        winner: 'TIE',
+        winner: undefined,
       };
     } else {
       result = this.gameService.calculateRoundResult(
@@ -95,10 +95,12 @@ export class GameComponent {
     this.lastResult = result;
     this.gameService.saveRoundResult(this.lastResult);
 
-    if (result.winner == this.humanPlayer!.name) {
-      this.humanPlayer!.wins++;
-    } else if (result.winner == this.pcPlayer!.name) {
-      this.humanPlayer!.losses++;
+    if (result.winner) {
+      if (result.winner.name === this.humanPlayer?.name) {
+        this.humanPlayer!.wins++;
+      } else if (result.winner.name === this.pcPlayer?.name) {
+        this.humanPlayer!.losses++;
+      }
     }
 
     this.gameService.savePlayer$(this.humanPlayer as Player);
