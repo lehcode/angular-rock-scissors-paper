@@ -1,4 +1,4 @@
-# Rock-Paper-Scissors Demo Application
+# Rock-Paper-Scissors Angular Application
 
 ## Architecture
 
