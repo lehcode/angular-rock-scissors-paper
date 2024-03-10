@@ -3,7 +3,7 @@ import { AppComponent } from '~/app/app.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 import { routes } from '~/app/app.routes';
-import { SidebarComponent } from '~/app/hoc/sidebar/sidebar.component';
+import { SidebarComponent } from '~/app/components/sidebar/sidebar.component';
 import { NgIconsModule } from '@ng-icons/core';
 import {
   bootstrap0CircleFill,
